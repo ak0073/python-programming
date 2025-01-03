@@ -1,0 +1,85 @@
+import os
+import sys
+
+# File where tasks will be stored
+TASKS_FILE = "tasks.txt"
+
+# Function to read the tasks from the file
+def read_tasks():
+    if not os.path.exists(TASKS_FILE):
+        return []
+    with open(TASKS_FILE, "r") as file:
+        tasks = file.readlines()
+    return [task.strip() for task in tasks]
+
+# Function to write tasks to the file
+def write_tasks(tasks):
+    with open(TASKS_FILE, "w") as file:
+        for task in tasks:
+            file.write(task + "\n")
+
+# Function to add a task
+def add_task(task):
+    tasks = read_tasks()
+    tasks.append(task)
+    write_tasks(tasks)
+    print(f"Task '{task}' added.")
+
+# Function to delete a task by its index
+def delete_task(task_number):
+    tasks = read_tasks()
+    if 0 <= task_number < len(tasks):
+        deleted_task = tasks.pop(task_number)
+        write_tasks(tasks)
+        print(f"Task '{deleted_task}' deleted.")
+    else:
+        print("Task number out of range.")
+
+# Function to display all tasks
+def view_tasks():
+    tasks = read_tasks()
+    if not tasks:
+        print("No tasks available.")
+    else:
+        print("\nCurrent Tasks:")
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. {task}")
+
+# Main function to handle command-line arguments
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python todo.py [command] [options]")
+        print("Commands:")
+        print("  add [task]       - Adds a task")
+        print("  view             - Displays all tasks")
+        print("  delete [task #]  - Deletes a task by its number")
+        sys.exit(1)
+
+    command = sys.argv[1].lower()
+
+    if command == "add":
+        if len(sys.argv) < 3:
+            print("Please provide a task to add.")
+        else:
+            task = " ".join(sys.argv[2:])
+            add_task(task)
+
+    elif command == "view":
+        view_tasks()
+
+    elif command == "delete":
+        if len(sys.argv) < 3:
+            print("Please provide the task number to delete.")
+        else:
+            try:
+                task_number = int(sys.argv[2]) - 1
+                delete_task(task_number)
+            except ValueError:
+                print("Invalid task number.")
+
+    else:
+        print(f"Unknown command: {command}")
+        print("Use 'add', 'view', or 'delete'.")
+
+if __name__ == "__main__":
+    main()
