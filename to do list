@@ -1,10 +1,8 @@
 import os
 import sys
 
-# File where tasks will be stored
 TASKS_FILE = "tasks.txt"
 
-# Function to read the tasks from the file
 def read_tasks():
     if not os.path.exists(TASKS_FILE):
         return []
@@ -12,20 +10,17 @@ def read_tasks():
         tasks = file.readlines()
     return [task.strip() for task in tasks]
 
-# Function to write tasks to the file
 def write_tasks(tasks):
     with open(TASKS_FILE, "w") as file:
         for task in tasks:
             file.write(task + "\n")
 
-# Function to add a task
 def add_task(task):
     tasks = read_tasks()
     tasks.append(task)
     write_tasks(tasks)
     print(f"Task '{task}' added.")
 
-# Function to delete a task by its index
 def delete_task(task_number):
     tasks = read_tasks()
     if 0 <= task_number < len(tasks):
@@ -35,7 +30,6 @@ def delete_task(task_number):
     else:
         print("Task number out of range.")
 
-# Function to display all tasks
 def view_tasks():
     tasks = read_tasks()
     if not tasks:
@@ -45,7 +39,6 @@ def view_tasks():
         for i, task in enumerate(tasks, 1):
             print(f"{i}. {task}")
 
-# Main function to handle command-line arguments
 def main():
     if len(sys.argv) < 2:
         print("Usage: python todo.py [command] [options]")
