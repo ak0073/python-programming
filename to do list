@@ -2,7 +2,6 @@ import os
 import sys
 
 TASKS_FILE = "tasks.txt"
-
 def read_tasks():
     if not os.path.exists(TASKS_FILE):
         return []
