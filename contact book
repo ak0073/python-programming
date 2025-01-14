@@ -1,5 +1,4 @@
 contacts = []
-
 def add_contact(name, phone, email, address):
     contact = {"name": name, "phone": phone, "email": email, "address": address}
     contacts.append(contact)
